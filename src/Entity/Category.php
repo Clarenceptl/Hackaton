@@ -24,16 +24,6 @@ class Category
      */
     private $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Bar::class, mappedBy="categories")
-     */
-    private $bars;
-
-    public function __construct()
-    {
-        $this->bars = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -51,30 +41,4 @@ class Category
         return $this;
     }
 
-    /**
-     * @return Collection|Bar[]
-     */
-    public function getBars(): Collection
-    {
-        return $this->bars;
-    }
-
-    public function addBar(Bar $bar): self
-    {
-        if (!$this->bars->contains($bar)) {
-            $this->bars[] = $bar;
-            $bar->addCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBar(Bar $bar): self
-    {
-        if ($this->bars->removeElement($bar)) {
-            $bar->removeCategory($this);
-        }
-
-        return $this;
-    }
 }

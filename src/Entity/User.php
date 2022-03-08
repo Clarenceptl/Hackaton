@@ -55,21 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $prenom;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Equipe::class, inversedBy="players")
-     */
-    private $equipe;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Equipe::class, inversedBy="joinUser")
-     */
-    private $joinEquipe;
-
-    public function __construct()
-    {
-        $this->joinEquipe = new ArrayCollection();
-    }
-
 
     public function getId(): ?int
     {
@@ -191,42 +176,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getEquipe(): ?Equipe
-    {
-        return $this->equipe;
-    }
-
-    public function setEquipe(?Equipe $equipe_id): self
-    {
-        $this->equipe = $equipe_id;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Equipe[]
-     */
-    public function getJoinEquipe(): Collection
-    {
-        return $this->joinEquipe;
-    }
-
-    public function addJoinEquipe(Equipe $joinEquipe): self
-    {
-        if (!$this->joinEquipe->contains($joinEquipe)) {
-            $this->joinEquipe[] = $joinEquipe;
-        }
-
-        return $this;
-    }
-
-    public function removeJoinEquipe(Equipe $joinEquipe): self
-    {
-        $this->joinEquipe->removeElement($joinEquipe);
 
         return $this;
     }
