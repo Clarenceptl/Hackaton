@@ -6,9 +6,6 @@
     {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-          crossorigin=""/>
     {% block stylesheets %}
         {#{{ encore_entry_link_tags('app') }}#}
     {% endblock %}
@@ -23,7 +20,7 @@
                 <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
             {% else %}
                 <li><a href="{{ path('app_login') }}">Connexion</a></li>
-                <li><a href="{{ path('register_redirection') }}">Inscription</a></li>
+                <li><a href="{{ path('app_register') }}">Inscription</a></li>
             {% endif %}
         </ul>
     </div>

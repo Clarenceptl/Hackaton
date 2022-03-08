@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Form\RegisterType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -17,17 +17,11 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/type-inscription', name: 'register_redirection', methods: ['GET'])]
-    public function chooseForm()
-    {
-        return $this->render('registration/redirection.html.twig');
-    }
-
     #[Route('/register', name: 'app_register',  methods: ['GET','POST'])]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, EmailVerifier $emailVerifier): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -47,7 +41,7 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('hightfive@mail.com', 'Mailer registration'))
+                    ->from(new Address('test@mail.com', 'Mailer registration'))
                     ->to($user->getEmail())
                     ->subject('Veuillez Confirmer votre Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
@@ -58,45 +52,6 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
-    }
-
-    #[Route('/register-manager', name: 'app_register_manager', methods: ['GET','POST'])]
-    public function registerManager(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, EmailVerifier $emailVerifier): Response
-    {
-        $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setRoles(["ROLE_MANAGER"]);
-            $user->setPassword(
-            $userPasswordHasherInterface->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            // generate a signed url and email it to the user
-            $emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('hightfive@mail.com', 'Mailer registration'))
-                    ->to($user->getEmail())
-                    ->subject('Veuillez Confirmer votre Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app_login');
-        }
-
-        return $this->render('registration/register_manager.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
