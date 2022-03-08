@@ -1,0 +1,17 @@
+{% extends 'base_admin.html.twig' %}
+
+
+{% block body %}
+    <style>
+        input {
+            opacity: 1 !important;
+            position: relative !important;
+            pointer-events: auto !important;
+        }
+    </style>
+    {{ form_start(form) }}
+    {{ form_rest(form) }}
+    <button type="submit">Modifier</button>
+    {{ form_end(form) }}
+{% endblock %}
+

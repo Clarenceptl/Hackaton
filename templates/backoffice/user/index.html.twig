@@ -1,0 +1,62 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Liste des Utilisateurs{% endblock %}
+
+{% block body %}
+    <h1>Liste des Utilisateurs</h1>
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Etes-vous sûr de vouloir supprimer cette utilisateurs ?</h4>
+        </div>
+        <div class="modal-footer">
+            <a id="deleteCheck" class="waves-effect waves-light btn-small red" href="#">Supprimer</a> 
+        </div>
+    </div>
+
+    <table>
+        <tr>
+            <td>Nom et prénom</td>
+            <td>Email</td>
+            <td>Role</td>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.nom }} {{ user.prenom }}</td>
+                <td>{{ user.email }}</td>
+                
+                {% if user.roles|last == 'ROLE_ADMIN' %}
+                    <td>Admin</td>
+                {% elseif user.roles|last == 'ROLE_MANAGER' %}
+                    <td>Manager</td>
+                {% else %}
+                    <td>User</td>
+                {% endif %}
+          
+                <td>
+                    <a href="{{ path('admin_user_edit', {'id': user.id}) }}">Editer</a>
+                    <button data-user-id="{{user.id}}" data-target="modal1" class="waves-effect waves-light btn-small modal-trigger red darken-1">Supprimer</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        const array = document.querySelectorAll(".btn-small.modal-trigger");
+        array.forEach(element => {
+            element.addEventListener('click',(e)=> {deletePopUp(e)});
+        });
+        function deletePopUp(e) {
+            // maybe easier to use FOSJsRoutingBundle
+            e.preventDefault();
+            const id = e.target.dataset.userId;
+            url = "{{ path('admin_user_delete', {'id': 0, 'token': csrf_token('delete_user')}) }}".replace(0,id);
+            document.querySelector('#deleteCheck').setAttribute('href', url);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const elems = document.querySelectorAll('.modal');
+            const instances = M.Modal.init(elems, {});
+        });
+    </script>
+{% endblock %}
