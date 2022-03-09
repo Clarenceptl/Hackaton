@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="LOB50.e" resname="road.home">
+        <source>road.home</source>
+        <target>accueil</target>
+      </trans-unit>
+      <trans-unit id="2aKj4az" resname="nav.lang">
+        <source>nav.lang</source>
+        <target>language</target>
+      </trans-unit>
+      <trans-unit id="fWEdFXp" resname="nav.connexion">
+        <source>nav.connexion</source>
+        <target>connexion</target>
+      </trans-unit>
+      <trans-unit id="DjYhMmy" resname="nav.inscription">
+        <source>nav.inscription</source>
+        <target>inscription</target>
+      </trans-unit>
+      <trans-unit id="6IWnx70" resname="symfony.is.great">
+        <source>symfony.is.great</source>
+        <target>Symfony is great</target>
+      </trans-unit>
+      <trans-unit id="1Fk_W.5" resname="symfony.is.amazing">
+        <source>symfony.is.amazing</source>
+        <target>Symfony is amazing</target>
+      </trans-unit>
+      <trans-unit id="I_6YtvM" resname="symfony.has.bundles">
+        <source>symfony.has.bundles</source>
+        <target>Symfony has bundles</target>
+      </trans-unit>
+      <trans-unit id="rruB2OR" resname="user.login">
+        <source>user.login</source>
+        <target>Login</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

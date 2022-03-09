@@ -1,3 +1,6 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+about_us:
+  path:
+    en: /home
+    fr: /accueil
+  controller: App\Controller\Front\DefaultController::index

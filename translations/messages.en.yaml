@@ -1,0 +1,7 @@
+road:
+    home: home
+
+nav:
+    lang: language
+    connexion: connection
+    inscription: register
