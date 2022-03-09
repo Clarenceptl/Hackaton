@@ -9,6 +9,18 @@
         <source>road.home</source>
         <target>accueil</target>
       </trans-unit>
+      <trans-unit id="2aKj4az" resname="nav.lang">
+        <source>nav.lang</source>
+        <target>language</target>
+      </trans-unit>
+      <trans-unit id="fWEdFXp" resname="nav.connexion">
+        <source>nav.connexion</source>
+        <target>connexion</target>
+      </trans-unit>
+      <trans-unit id="DjYhMmy" resname="nav.inscription">
+        <source>nav.inscription</source>
+        <target>inscription</target>
+      </trans-unit>
       <trans-unit id="6IWnx70" resname="symfony.is.great">
         <source>symfony.is.great</source>
         <target>Symfony is great</target>

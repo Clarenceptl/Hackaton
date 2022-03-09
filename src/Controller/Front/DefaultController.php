@@ -2,19 +2,21 @@
 
 namespace App\Controller\Front;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
     public function __construct(private TranslatorInterface $translator){}
 
-    #[Route('/{_locale}', name: 'default', requirements:[ "_locale"=>"en|fr|de"])]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        dd($this->translator->trans('road.home'));
+        // dd($this->translator->trans('road.home'));
+        // dd($request->getLocale());
+
         return $this->render('front/default/home.html.twig', [
             'controller_name' => 'FRONT'
         ]);
