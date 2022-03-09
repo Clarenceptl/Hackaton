@@ -20,7 +20,7 @@ class BlogType extends AbstractType
                     'mapped' => false,
                     'AN'=>'AN',
                     'FR'=>'FR',
-                    'AL'=>'AL',
+                    'AL'=>'AL', 
                 ],
             ])
         ;
