@@ -1,0 +1,18 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Liste des blogs{% endblock %}
+
+{% block body %}
+    {% for blog in blog %}
+
+    {{ blog.titre }}
+    {{ blog.contenue }}
+
+    <a href="{{path('blog_edit', {'id': blog.id})}}"> Modifier</a>
+    <a href="{{path('blog_delete', {'id': blog.id})}}"> Supprimer </a>
+
+
+    {% endfor %}
+
+
+{% endblock %}
