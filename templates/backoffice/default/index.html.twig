@@ -20,18 +20,13 @@
 
 <input type="file" id="fileUpload" />
 <input type="button" id="upload" value="Upload" />
+<p>Abscisse :</p>
+<div class="radio"></div>
+<p>Data :</p>
+<div class="checkbox"></div>
 
-<div>
-  <canvas id="myChart"></canvas>
-</div>
-<div>
-  <input type="checkbox" id="scales" name="scales">
-  <label for="scales">Scales</label>
-</div>
-
-<div>
-  <input type="checkbox" id="horns" name="horns">
-  <label for="horns">Horns</label>
+<div class="chart">
+  <canvas id="myChart" style="diplay: none;"></canvas>
 </div>
 
 
@@ -43,13 +38,17 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
 <script type="text/javascript">
     let columns = [];
-    const datas = {
+    let labels_chart = [];
+    let data_chart = [];
+    let full_data = [];
+    let selected_data=[];
+    const init_data = {
         labels: [],
         datasets: []
     };
     const config = {
         type: 'line',
-        datas,
+        init_data,
         options: {}
     };
     
@@ -57,10 +56,9 @@
         document.getElementById('myChart'),
         config
     );
-    $("body").on("click", "#upload", function () {
+    $("body").one("click", "#upload", function () {      
         //Reference the FileUpload element.
         var fileUpload = $("#fileUpload")[0];
- 
         //Validate whether File is valid Excel file.
         var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$/;
         if (regex.test(fileUpload.value.toLowerCase())) {
@@ -103,31 +101,90 @@
         var firstSheet = workbook.SheetNames[0];
  
         //Read all rows from First Sheet into an JSON array.
-        const datas = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
+        full_data = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
 
-        columns = Object.keys(datas[0]);
-        let labels = [];
-        let data_chart = [];
-
-        datas.map(element => {
-            labels.push(element.product_code);
-            data_chart.push(element.mesure);
+        columns = Object.keys(full_data[0]);
+      
+        setCheckbox();
+    };
+    function setCheckbox() {
+        
+        columns.forEach((element,index) => {
+            if(index === 0){
+                $('.checkbox').append(`<input type="checkbox" id="${element}-checkbox" value="${element}" name="${element}" checked />`);
+                $('.radio').append(`<input type="radio" id="${element}-radio" value="${element}" name="label" checked/>`);
+                $('.radio').append(`<label for="${element}-radio">${element}</label>`);
+                $('.checkbox').append(`<label for="${element}-checkbox">${element}</label>`);
+            }else{
+                $('.checkbox').append(`<input type="checkbox" id="${element}-checkbox" value="${element}" name="${element}" />`);
+                $('.radio').append(`<input type="radio" id="${element}-radio" value="${element}" name="label" />`);
+                $('.radio').append(`<label for="${element}-radio">${element}</label>`);
+                $('.checkbox').append(`<label for="${element}-checkbox">${element}</label>`);
+            }
         });
-        const datasets = {
-            label: 'My First dataset',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+
+        full_data.map(element => {
+            labels_chart.push(element[columns[0]]);
+            data_chart.push(element[columns[0]]);
+        });
+        let random_color = randomColor();
+        let datasets = {
+            label: columns[0],
+            backgroundColor: random_color,
+            borderColor: random_color,
             data: data_chart,
         }
-        addData(myChart,labels,datasets);
-    };
+        selected_data.push(datasets);
+        $('#myChart').toggle(true);
 
-    function addData(chart, label, dataset) {
-        
-        chart.data.labels = label;
-        chart.data.datasets.push(dataset);
-        console.log( chart.data);
+        addData(myChart,labels_chart,selected_data);
+
+        $("input[type='radio']").change(function(e) {
+            labels_chart = []
+            full_data.map(element => {
+                labels_chart.push(element[e.target.value]);
+            });
+            addData(myChart,labels_chart);
+        })
+        $("input[type='checkbox']").change(function(e) {
+            if(this.checked) {
+                let new_data = [];
+                random_color = randomColor();
+                datasets = {
+                    label: e.target.value,
+                    backgroundColor: random_color,
+                    borderColor: random_color,
+                    data: []
+                }
+                full_data.map(element => {
+                    new_data.push(element[e.target.value]);
+                });
+                datasets.data = new_data;
+                selected_data.push(datasets);
+                addData(myChart,null,selected_data);
+            }else{
+                selected_data.map(element=>{
+                    if(element.label===e.target.value){
+                        let i = selected_data.indexOf(element);
+                        selected_data.splice(i,1);
+                    }
+                });
+                myChart.update();
+            }
+            
+        })
+    }
+    function addData(chart, label=null, dataset=null) {
+        if(label){
+            chart.data.labels = label;
+        }
+        if(dataset){
+            chart.data.datasets = dataset;
+        }
         chart.update();
+    }
+    function randomColor() {
+        return 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
     }
 </script>
 {% endblock %}
