@@ -18,11 +18,45 @@
     </ul>
 </div>
 
+<input type="file" id="fileUpload" />
+<input type="button" id="upload" value="Upload" />
 
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+<div>
+  <input type="checkbox" id="scales" name="scales">
+  <label for="scales">Scales</label>
+</div>
+
+<div>
+  <input type="checkbox" id="horns" name="horns">
+  <label for="horns">Horns</label>
+</div>
+
+
+{% endblock %}
+{% block javascripts %}
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
 <script type="text/javascript">
+    let columns = [];
+    const datas = {
+        labels: [],
+        datasets: []
+    };
+    const config = {
+        type: 'line',
+        datas,
+        options: {}
+    };
+    
+    let myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
     $("body").on("click", "#upload", function () {
         //Reference the FileUpload element.
         var fileUpload = $("#fileUpload")[0];
@@ -58,8 +92,9 @@
             alert("Please upload a valid Excel file.");
         }
     });
+
     function ProcessExcel(data) {
-        //Read the Excel File data.
+        //Read the Excel File data.    
         var workbook = XLSX.read(data, {
             type: 'binary'
         });
@@ -68,83 +103,31 @@
         var firstSheet = workbook.SheetNames[0];
  
         //Read all rows from First Sheet into an JSON array.
-        var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
- 
-        //Create a HTML Table element.
-        var table = $("<table />");
-        table[0].border = "1";
- 
-        //Add the header row.
-        var row = $(table[0].insertRow(-1));
- 
-       //Add the header cells.
-        var headerCell = $("<th />");
-        headerCell.html("product_code");
-        row.append(headerCell);
- 
-        var headerCell = $("<th />");
-        headerCell.html("user_id");
-        row.append(headerCell);
- 
-        var headerCell = $("<th />");
-        headerCell.html("zone_code");
-        row.append(headerCell);
+        const datas = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
 
-        var headerCell = $("<th />");
-        headerCell.html("score_skinbiosense");
-        row.append(headerCell);
+        columns = Object.keys(datas[0]);
+        let labels = [];
+        let data_chart = [];
 
-        var headerCell = $("<th />");
-        headerCell.html("session_id");
-        row.append(headerCell);
-        
-        var headerCell = $("<th />");
-        headerCell.html("mesure");
-        row.append(headerCell);
- 
-
-        //Add the data rows from Excel file.
-        for (var i = 0; i < excelRows.length; i++) {
-            //Add the data row.
-            var row = $(table[0].insertRow(-1));
- 
-            //Add the data cells.
-            var cell = $("<td />");
-            cell.html(excelRows[i].product_code);
-            row.append(cell);
- 
-            cell = $("<td />");
-            cell.html(excelRows[i].user_id);
-            row.append(cell);
- 
-            cell = $("<td />");
-            cell.html(excelRows[i].zone_code);
-            row.append(cell);
-
-            cell = $("<td />");
-            cell.html(excelRows[i].score_skinbiosense);
-            row.append(cell);
-
-            cell = $("<td />");
-            cell.html(excelRows[i].session_id);
-            row.append(cell);
-
-            cell = $("<td />");
-            cell.html(excelRows[i].mesure);
-            row.append(cell);
+        datas.map(element => {
+            labels.push(element.product_code);
+            data_chart.push(element.mesure);
+        });
+        const datasets = {
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: data_chart,
         }
- 
-        var dvExcel = $("#dvExcel");
-        dvExcel.html("");
-        dvExcel.append(table);
+        addData(myChart,labels,datasets);
     };
+
+    function addData(chart, label, dataset) {
+        
+        chart.data.labels = label;
+        chart.data.datasets.push(dataset);
+        console.log( chart.data);
+        chart.update();
+    }
 </script>
-
-
-
-<input type="file" id="fileUpload" />
-<input type="button" id="upload" value="Upload" />
-<hr />
-<div id="dvExcel"></div>
-
 {% endblock %}
