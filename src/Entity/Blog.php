@@ -32,6 +32,17 @@ class Blog
      */
     private $langue;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_sent;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="blogs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categories;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +80,30 @@ class Blog
     public function setLangue(?string $langue): self
     {
         $this->langue = $langue;
+
+        return $this;
+    }
+
+    public function getIsSent(): ?bool
+    {
+        return $this->is_sent;
+    }
+
+    public function setIsSent(bool $is_sent): self
+    {
+        $this->is_sent = $is_sent;
+
+        return $this;
+    }
+
+    public function getCategories(): ?Category
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(?Category $categories): self
+    {
+        $this->categories = $categories;
 
         return $this;
     }

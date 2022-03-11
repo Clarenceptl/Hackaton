@@ -6,11 +6,13 @@ use App\Entity\Blog;
 use App\Form\BlogType;
 use App\Repository\BlogRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
 
 class BlogController extends AbstractController
 {
@@ -26,6 +28,7 @@ class BlogController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
             $blog = $form->getData();
+            $blog->setIsSent(true);
             
             $em->persist($blog);
             // dd($blog);
@@ -35,7 +38,6 @@ class BlogController extends AbstractController
         }
         
         
-
         return $this->render('blog/addblog.html.twig', [
             'controller_name' => 'BlogController',
             'form' => $form->createView(),
@@ -116,5 +118,32 @@ class BlogController extends AbstractController
     }
 
     // ---------------FIN EDIT BLOG ---------------
+
+
+    // ---------------NEWSLETTER ---------------
+    // -----------------------------------------
+
+
+
+    #[Route('/blog/newsletter/{id}', name: 'newsletter')]
+    public function send(Blog $blog, MailerInterface $mailer): Response
+    {
+        $user = $blog->getCategories()->getUsers();
+
+        foreach($user as $user){
+                $email = (new TemplatedEmail())
+                    ->from('valee.victor@gmail.com')
+                    ->to($user->getEmail())
+                    ->subject($blog->getTitre())
+                    ->htmlTemplate('front/default/home.html.twig')
+                    ->context(compact('blog', 'user'))
+                    ;
+                    $mailer->send($email);
+                    dd($email);
+                    return $this->redirectToRoute('blog');
+            
+        }
+    }
+
 
 }
