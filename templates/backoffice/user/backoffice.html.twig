@@ -9,7 +9,7 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello {{ mail }}</h1>
 
     This friendly message is coming from:
     <ul>
@@ -26,8 +26,12 @@
 <div class="checkbox"></div>
 
 <div class="chart">
-  <canvas id="myChart" style="diplay: none;"></canvas>
+  <canvas id="myChart" style="display: none;"></canvas>
 </div>
+
+
+<button class="submit-btn" style="display: none;">Submit</button>
+
 
 
 {% endblock %}
@@ -91,6 +95,14 @@
         }
     });
 
+    $("body").on("click", ".submit-btn", function (e) {
+        e.preventDefault();
+        localStorage.setItem('data-chart', selected_data);
+        let test = localStorage.getItem('data-chart');
+        console.log(test)
+        // document.location.href="/";
+    })
+
     function ProcessExcel(data) {
         //Read the Excel File data.    
         var workbook = XLSX.read(data, {
@@ -136,6 +148,7 @@
         }
         selected_data.push(datasets);
         $('#myChart').toggle(true);
+        $('.submit-btn').toggle(true);
 
         addData(myChart,labels_chart,selected_data);
 
@@ -173,6 +186,8 @@
             }
             
         })
+
+        
     }
     function addData(chart, label=null, dataset=null) {
         if(label){
