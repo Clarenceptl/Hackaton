@@ -34,7 +34,7 @@
     <div class="toast-container" id="myToast" style="position: absolute; top: 40px; right: 10px;">
       {% for type, messages in app.flashes() %}
         {% for message in messages %}
-          <div class="toast align-items-center show text-white {{ type == 'green' ? 'bg-success' : 'bg-danger' }} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast align-items-center show text-white {{ type == 'green' ? 'bg-success' : 'bg-danger' }} -0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
               <div class="toast-body">
                 {{message}}
@@ -50,30 +50,34 @@
 
     <main class="">
       {% block body %}
-        <div class="col-12 row m-b-15 container">
-          <div class="col-6">
-            <div class="d-flex flex-row-reverse">
-              <img class="" src="{{asset('img/skin.png')}}" alt="skin">
+        <div class="container">
+            <div class="col-12 row mb-15">
+            <div class="col-6">
+                {# d-flex flex-row-reverse #}
+                <div class="">
+                <img class="" src="{{asset('img/skin.png')}}" alt="skin">
+                </div>
             </div>
-          </div>
-          <div class="col-6 align-self-center">
-            <div>
-              <h1>We reseach beauty</h1>
-              <p>WIRED BEAUTY is a new datadriven market research company dedicated to cosmetic laboratories. We help our clients evaluate and develop skincare formulae by comparing cosmetics on statistically viable samples of men & women (1000 people) :</p>
+            <div class="col-6 align-self-center">
+                <div>
+                <h1>We reseach beauty</h1>
+                <p>WIRED BEAUTY is a new datadriven market research company dedicated to cosmetic laboratories. We help our clients evaluate and develop skincare formulae by comparing cosmetics on statistically viable samples of men & women (1000 people) :</p>
+                </div>
+                <div>
+                <p>1.The antioxydative and moisterizing effect of formulae (in vivo)</p>
+                <p>2.The antioxydative and moisterizing effect of ingredients (in vitro) (cf Reach)</p>
+                <p>3.Consumer feedback after product use</p>
+                <p>4.Geolocalisation and exposome data (UV - pollution - temperature)</p>
+                <p>5.Environmental conditions (UV pollution) surronding the consumer’s lifestyle</p>
+                <p>6.Skincare performance after 1 day – 8 days – 15 days - X days.</p>
+                </div>
             </div>
-            <div>
-              <p>1.The antioxydative and moisterizing effect of formulae (in vivo)</p>
-              <p>2.The antioxydative and moisterizing effect of ingredients (in vitro) (cf Reach)</p>
-              <p>3.Consumer feedback after product use</p>
-              <p>4.Geolocalisation and exposome data (UV - pollution - temperature)</p>
-              <p>5.Environmental conditions (UV pollution) surronding the consumer’s lifestyle</p>
-              <p>6.Skincare performance after 1 day – 8 days – 15 days - X days.</p>
             </div>
-          </div>
-        </div>
 
-        <div class="col-12 row mt-15 mb-15 blue border p-80">
-            <div class="border bg row">
+
+        </div>
+        <div class="col-12 row my-5 blue  p-80">
+            <div class=" bg row">
                 <div class="col-6">
                     <div class="">
                         <img class="" src="{{asset('img/iphone.png')}}" alt="skin">
@@ -95,7 +99,31 @@
                 </div>
             </div>
         </div>
-
+        <div class="container">
+            <div class="col-12 row my-5 p-80">
+            <div class="row">
+                <div class="col-6 align-self-center">
+                    <div>
+                        <h1>We help </h1>
+                    </div>
+                    <div class="">
+                        <p><b>DISCOVER</b> new claims on large skin type cohorts</p>
+                        <p><b>PROVE</b> claims through large data intelligence</p>
+                        <p><b>TRULY</b> UNDERSTAND skin reactions in absence of product</p>
+                        <p><b>COMPARE</b> performance on a long-term basis (Cohorts follow-up)</p>
+                        <p><b>UNDERSTAND</b> exposome and skin</p>
+                        <p><b>SAVE</b> TIME vs chromatography and IMROVE results vs TWEL</p>
+                        <p><b>READ</b> SIMULTANOUSLY  skin response & consumer feed-back</p>
+                    </div>
+                </div>
+                <div class="col-6 my-5">
+                    <div class="">
+                        <img class="" src="{{asset('img/creme.jpg')}}" alt="skin">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
       {% endblock %}
     </main>
 
