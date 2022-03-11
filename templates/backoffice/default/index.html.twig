@@ -17,4 +17,174 @@
         <li>Your template at <code><a href="{{ '/var/www/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
     </ul>
 </div>
+
+<input type="file" id="fileUpload" />
+<input type="button" id="upload" value="Upload" />
+<p>Abscisse :</p>
+<div class="radio"></div>
+<p>Data :</p>
+<div class="checkbox"></div>
+
+<div class="chart">
+  <canvas id="myChart" style="diplay: none;"></canvas>
+</div>
+
+
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+<script type="text/javascript">
+    let columns = [];
+    let labels_chart = [];
+    let data_chart = [];
+    let full_data = [];
+    let selected_data=[];
+    const init_data = {
+        labels: [],
+        datasets: []
+    };
+    const config = {
+        type: 'line',
+        init_data,
+        options: {}
+    };
+    
+    let myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+    $("body").one("click", "#upload", function () {      
+        //Reference the FileUpload element.
+        var fileUpload = $("#fileUpload")[0];
+        //Validate whether File is valid Excel file.
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$/;
+        if (regex.test(fileUpload.value.toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+ 
+                //For Browsers other than IE.
+                if (reader.readAsBinaryString) {
+                    reader.onload = function (e) {
+                        ProcessExcel(e.target.result);
+                    };
+                    reader.readAsBinaryString(fileUpload.files[0]);
+                } else {
+                    //For IE Browser.
+                    reader.onload = function (e) {
+                        var data = "";
+                        var bytes = new Uint8Array(e.target.result);
+                        for (var i = 0; i < bytes.byteLength; i++) {
+                            data += String.fromCharCode(bytes[i]);
+                        }
+                        ProcessExcel(data);
+                    };
+                    reader.readAsArrayBuffer(fileUpload.files[0]);
+                }
+            } else {
+                alert("This browser does not support HTML5.");
+            }
+        } else {
+            alert("Please upload a valid Excel file.");
+        }
+    });
+
+    function ProcessExcel(data) {
+        //Read the Excel File data.    
+        var workbook = XLSX.read(data, {
+            type: 'binary'
+        });
+ 
+        //Fetch the name of First Sheet.
+        var firstSheet = workbook.SheetNames[0];
+ 
+        //Read all rows from First Sheet into an JSON array.
+        full_data = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
+
+        columns = Object.keys(full_data[0]);
+      
+        setCheckbox();
+    };
+    function setCheckbox() {
+        
+        columns.forEach((element,index) => {
+            if(index === 0){
+                $('.checkbox').append(`<input type="checkbox" id="${element}-checkbox" value="${element}" name="${element}" checked />`);
+                $('.radio').append(`<input type="radio" id="${element}-radio" value="${element}" name="label" checked/>`);
+                $('.radio').append(`<label for="${element}-radio">${element}</label>`);
+                $('.checkbox').append(`<label for="${element}-checkbox">${element}</label>`);
+            }else{
+                $('.checkbox').append(`<input type="checkbox" id="${element}-checkbox" value="${element}" name="${element}" />`);
+                $('.radio').append(`<input type="radio" id="${element}-radio" value="${element}" name="label" />`);
+                $('.radio').append(`<label for="${element}-radio">${element}</label>`);
+                $('.checkbox').append(`<label for="${element}-checkbox">${element}</label>`);
+            }
+        });
+
+        full_data.map(element => {
+            labels_chart.push(element[columns[0]]);
+            data_chart.push(element[columns[0]]);
+        });
+        let random_color = randomColor();
+        let datasets = {
+            label: columns[0],
+            backgroundColor: random_color,
+            borderColor: random_color,
+            data: data_chart,
+        }
+        selected_data.push(datasets);
+        $('#myChart').toggle(true);
+
+        addData(myChart,labels_chart,selected_data);
+
+        $("input[type='radio']").change(function(e) {
+            labels_chart = []
+            full_data.map(element => {
+                labels_chart.push(element[e.target.value]);
+            });
+            addData(myChart,labels_chart);
+        })
+        $("input[type='checkbox']").change(function(e) {
+            if(this.checked) {
+                let new_data = [];
+                random_color = randomColor();
+                datasets = {
+                    label: e.target.value,
+                    backgroundColor: random_color,
+                    borderColor: random_color,
+                    data: []
+                }
+                full_data.map(element => {
+                    new_data.push(element[e.target.value]);
+                });
+                datasets.data = new_data;
+                selected_data.push(datasets);
+                addData(myChart,null,selected_data);
+            }else{
+                selected_data.map(element=>{
+                    if(element.label===e.target.value){
+                        let i = selected_data.indexOf(element);
+                        selected_data.splice(i,1);
+                    }
+                });
+                myChart.update();
+            }
+            
+        })
+    }
+    function addData(chart, label=null, dataset=null) {
+        if(label){
+            chart.data.labels = label;
+        }
+        if(dataset){
+            chart.data.datasets = dataset;
+        }
+        chart.update();
+    }
+    function randomColor() {
+        return 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+    }
+</script>
 {% endblock %}
