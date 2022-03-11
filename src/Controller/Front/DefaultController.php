@@ -30,14 +30,6 @@ class DefaultController extends AbstractController
             'controller_name' => 'FRONT',
         ]);
     }
-    
-    #[Route('/whatweare', name: 'page_whatweare')]
-    public function showPageWhatWeAre(): Response
-    {
-        return $this->render('front/default/whatweare.html.twig', [
-            'controller_name' => 'FRONT',
-        ]);
-    }
 
     // --------------LAB-------------------
     // ------------------------------------
@@ -46,6 +38,18 @@ class DefaultController extends AbstractController
     public function lab(): Response
     {
         return $this->render('front/default/lab.html.twig', [
+            'controller_name' => 'FRONT',
+        ]);
+    }
+    // --------------FIN LAB-------------------
+
+    // --------------WHO WE ARE-------------------
+    // ------------------------------------
+
+    #[Route('/who', name: 'page_who')]
+    public function who(): Response
+    {
+        return $this->render('front/default/who.html.twig', [
             'controller_name' => 'FRONT',
         ]);
     }
