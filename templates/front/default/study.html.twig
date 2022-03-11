@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      window.axeptioSettings = {
+        clientId: "622a12eda3710ac01d450cb0",
+        cookiesVersion: "https://github/clarenceptl/hackaton-fr"
+      };
+
+      (function (d, s) {
+        var t = d.getElementsByTagName(s)[0],
+          e = d.createElement(s);
+        e.async = true;
+        e.src = "//static.axept.io/sdk.js";
+        t.parentNode.insertBefore(e, t);
+      })(document, "script");
+    </script>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}Wired Beauty{% endblock %}
+    </title>
+    {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    {% block stylesheets %}
+      {#{{ encore_entry_link_tags('app') }}#}
+    <link href="css/css.css" rel="stylesheet">
+    {% endblock %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body style="background-color:#F9F6F1;">
+    <div class="toast-container" id="myToast" style="position: absolute; top: 40px; right: 10px;">
+      {% for type, messages in app.flashes() %}
+        {% for message in messages %}
+          <div class="toast align-items-center show text-white {{ type == 'green' ? 'bg-success' : 'bg-danger' }} -0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div class="toast-body">
+                {{message}}
+              </div>
+              <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+
+    {% include "partials/header.html.twig" %}
+
+    <main class="">
+      {% block body %}
+        <div class="container">
+        
+            <div class="m-5">
+                <div>
+                    <img src="{{asset('img/molecule.jpg')}}" alt="">
+                </div>
+            </div>
+
+            <div class="text-center my-5">
+                <h1 class="m-auto w-40 my-3"><b>Nomadic labgrade IOT device & smart app</b></h1>
+                <p class="m-auto w-60">WIRED BEAUTY is a French beauty-tech market research company which invested 1,3M€ 
+                    to develop a non invasive, portable lab connected device to deliver labgrade and real time 
+                    measurements of skin markers to dermocosmetic lab as well as a smart app 
+                    in order to also harvest consumer perception.
+                </p>
+            </div>
+
+            <div class="row col-12 d-flex justify-content-between c-w my-5">
+                <div class="w-25 col-xs-12 blue rounded-33 p-3">
+                    <h2 class="text-center">WB is new</h2>
+                    <p>Hybrid studies combining objective clinical results measurements & consumer perception.</p>
+                </div>
+                <div class="w-25 col-xs-12 blue rounded-33 p-3">
+                    <h2 class="text-center">WB is different</h2>
+                    <p>Proprietary IOT and Algorythm allowing decifering within minutes combined with a consumer app harvesting consumer opinions.</p>
+                </div>
+                <div class="w-25 col-xs-12 blue rounded-33 p-3">
+                    <h2 class="text-center">WB is better</h2>
+                    <p>Real World Evidence (link with pollution, UV  and lifestyle) of skincare efficiency on large statistical basis (ex 1000 testers).</p>
+                </div>
+            </div>
+            
+
+            <div class="row col-12 my-5">
+                <div class="col-lg-6 col-md-6 col-xs-12 my-5">
+                    <h1>Our story</h1>
+                    <p>Wired Beauty as of today is a saas based start-up co-founded by Stanislas and Sophie, two beauty experts who become friends while working toghether at l’Oréal.</p>
+                    <p>Stanislas initiated the scientific research on electrochemistry and antiox measurement to develop a skincare prescription tool, and launched a first B2C sun prevention tool (mapo solar). </p>
+                    <p>In 2021, , considering the blue ocean of cosmetic market research and the latest demands of consumer on efficiency proofs especially in Asia, the two of them decided to pivot to a 100% B2B Saas company, convinced by the potential of this technology.</p>
+                    <p>As of today, Wired Beauty Technologies has invested 1.3M€ in research on their exclusive IOT, mobile app, algorithand scientific exposome and suncare knowledge partnering with a top-notch consortium ( APHP et Qima lien a créer vers page scientific)</p>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12 align-self-center my-5">
+                    <div>
+                        <img src="{{asset('img/working.jpg')}}" alt="working">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 row my-5 blue p-80">
+            <div class="row p-40">
+                <div class="col-6">
+                    <div class="text-center">
+                        <img class="rounded-33" src="{{asset('img/gens.jpg')}}" alt="gens">
+                    </div>
+                </div>
+                <div class="col-6 align-self-center c-w">
+                    <div>
+                    <h1>Our team & scientific consortium</h1>
+                    <p>
+                        Wired Beaty Technologies is a three-sided French tech team combining the intelligence of two seasoned cosmetic professionals lien vers bio sophie et Stan , the electro chemistry knowledge of our CRO partner in Toulouse (Qima) and the scientific skin expertise of a renowned dermatologist Mrs Tu-ahn DUONG lien vers BIO of the Henri Mondor Hospital in Paris.
+                        It is the quality of our employees and partners that build the trust we seek. 
+                        Because of their singular competences and contagious energy, they help our clients improve and simplify skincare research data.
+                    </p>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="my-5">
+                <div class="text-center my-5">
+                    <h1><b>Nomadic labgrade IOT device & smart app</b></h1>
+                </div>
+                <div class="col-lg-12 col-md-6 col-xs-12 d-flex justify-content-around my-4">
+                    <div class="w-28 bg-w rounded-33">
+                        <div>
+                            <div ><img class="w-full rounded-33 " src="{{asset('img/mec.png')}}" alt="mec"></div>
+                        </div>
+                        <div class="text-center">
+                            <p><b>Stanislas Vandier</b><br> Wired beauty</p>
+                        </div>
+                    </div>
+                    <div class="w-28 bg-w rounded-33">
+                        <div>
+                            <div ><img class="w-full rounded-33" src="{{asset('img/meuf.png')}}" alt="mec"></div>
+                        </div>
+                        <div class="text-center">
+                            <p><b>Sophie le Tanneur</b><br> Wired beauty</p>
+                        </div>
+                    </div>
+                    <div class="w-28 bg-w rounded-33">
+                        <div>
+                            <div ><img class="w-full rounded-33" src="{{asset('img/mec2.png')}}" alt="mec"></div>
+                        </div>
+                        <div class="text-center">
+                            <p><b>Dr Nicolas Amalric</b><br> Synelvia</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+      {% endblock %}
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+      let element = document.getElementById("myToast");
+
+      // Create toast instance
+      let myToast = new bootstrap.Toast(element);
+      myToast.show()
+    </script>
+    {% block javascripts %}
+      {#{{ encore_entry_script_tags('app') }}#}
+    {% endblock %}
+  </body>
+</html>

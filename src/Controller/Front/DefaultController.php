@@ -53,6 +53,19 @@ class DefaultController extends AbstractController
             'controller_name' => 'FRONT',
         ]);
     }
-    // --------------FIN LAB-------------------
+    // --------------FIN WHO WE ARE-------------------
+
+
+    // --------------Study-------------------
+    // ------------------------------------
+
+    #[Route('/study', name: 'page_study')]
+    public function study(): Response
+    {
+        return $this->render('front/default/study.html.twig', [
+            'controller_name' => 'FRONT',
+        ]);
+    }
+    // --------------FIN Study-------------------
     
 }
