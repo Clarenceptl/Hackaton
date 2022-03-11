@@ -12,6 +12,7 @@ class DefaultController extends AbstractController
 {
     public function __construct(private TranslatorInterface $translator){}
 
+    #[Route('/', name: 'page_home')]
     public function index(Request $request): Response
     {
         // dd($this->translator->trans('road.home'));
@@ -30,7 +31,7 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'page_whatweare')]
+    #[Route('/whatweare', name: 'page_whatweare')]
     public function showPageWhatWeAre(): Response
     {
         return $this->render('front/default/whatwedo.html.twig', [
