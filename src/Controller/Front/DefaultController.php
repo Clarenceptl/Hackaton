@@ -34,9 +34,21 @@ class DefaultController extends AbstractController
     #[Route('/whatweare', name: 'page_whatweare')]
     public function showPageWhatWeAre(): Response
     {
-        return $this->render('front/default/home.html.twig', [
+        return $this->render('front/default/whatweare.html.twig', [
             'controller_name' => 'FRONT',
         ]);
     }
+
+    // --------------LAB-------------------
+    // ------------------------------------
+
+    #[Route('/lab', name: 'page_lab')]
+    public function lab(): Response
+    {
+        return $this->render('front/default/lab.html.twig', [
+            'controller_name' => 'FRONT',
+        ]);
+    }
+    // --------------FIN LAB-------------------
     
 }
