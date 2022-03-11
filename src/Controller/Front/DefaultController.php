@@ -30,6 +30,14 @@ class DefaultController extends AbstractController
             'controller_name' => 'FRONT',
         ]);
     }
+
+    #[Route('/scientifique-validation', name: 'page_scientifique-validation')]
+    public function showPageScientifiqueValidation(): Response
+    {
+        return $this->render('front/default/scientific-validation.html.twig', [
+            'controller_name' => 'FRONT',
+        ]);
+    }
     
     #[Route('/whatweare', name: 'page_whatweare')]
     public function showPageWhatWeAre(): Response

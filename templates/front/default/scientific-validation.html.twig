@@ -1,0 +1,45 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Scientifique validation - Wired Beauty{% endblock %}
+
+{% block body %}
+    <img class="img-fluid" src="{{asset('assets/image/Image-fond-science.png')}}" />
+    <div class="row d-flex" style="margin-bottom: 57px;">
+        <div class="col-12">
+            <h1 class="text-center fs-1" style="margin-top: 86px;margin-bottom: 16px">Wired beauty scientific partners</h1>
+            <div class="d-flex justify-content-center">
+                <hr style="width:70px; color:#0991C3; height:3px; margin-bottom: 16px">
+            </div>
+            <p class="text-center col-md-8 offset-md-2">The Wired Beauty technology is the fruit of a scientific consortium uniting the founders of Wired Beauty, the APHP 
+(Assistance Publique – Hôpitaux de Paris) and the French Contract Research Organization (CRO), QIMA </p>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 67px;">
+        <div class="col-12 blue d-flex justify-content-center">
+            <img src="{{asset('assets/image/Assistance_publique.png')}}" class="" style="object-fit: contain;">
+            <img src="{{asset('assets/image/Quima.png')}}">
+        </div>
+    </div>
+    <div class="row d-flex" style="margin-bottom: 46px;">
+        <div class="col-12">
+            <h2 class="text-center fs-1" style="margin-bottom: 16px">Skin care intelligence</h2>
+            <div class="d-flex justify-content-center">
+                <hr style="width:70px; color:#0991C3; height:3px; margin-bottom: 16px">
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 46px;">
+        <div class="col-6">
+            <h2 class="fs-1" style="margin-bottom: 16px">What is oxidative stress ?</h2>
+            <div class="d-flex">
+                <hr style="width:70px; color:#0991C3; height:3px; margin-bottom: 16px">
+            </div>
+            <p >Oxidative stress is a rupture of cellular balance, producing a build-up of free radicals responsible for skin premature ageing.
+One can distinguish two types of antioxidants : enzymatic (for instance : superoxide, catalase, peroxidase, dismutase, peroxidase glutathione) and non enzymatic ones (such as ascorbic acid, glutathione, uric acid, vitamins A, E, C, etc.)</p>
+        </div>
+        <div class="col-6">
+            <img src="{{asset('assets/image/human-cells.png')}}" class="img-fluid" />
+        </div>
+    </div>
+    
+{% endblock %}
