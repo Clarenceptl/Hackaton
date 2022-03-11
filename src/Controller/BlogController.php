@@ -139,7 +139,7 @@ class BlogController extends AbstractController
                     ->context(compact('blog', 'user'))
                     ;
                     $mailer->send($email);
-                    dd($email);
+                    // dd($email);
                     return $this->redirectToRoute('blog');
             
         }
